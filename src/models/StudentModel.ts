@@ -16,7 +16,7 @@ function calculateAverage(weights: CourseGrades): number {
 function addStudent(newStudentData: NewStudentRequest): boolean {
     const {name, weights} = newStudentData;
 
-    if(name in students) {
+    if(Object.hasOwn(students, name)) {
         return false; // student already exists
     }
 
@@ -28,7 +28,13 @@ function addStudent(newStudentData: NewStudentRequest): boolean {
 }
 
 function getStudent(studentName: string): Student | undefined {
-   return (studentName in students) ? students[studentName] : undefined;
+   return (Object.hasOwn(students, studentName)) ? students[studentName] : undefined;
 }
 
-export {students, addStudent, getStudent};
+function calculateFinalExamScore(currentAverage: number, finalExamWeight: number, targetScore: number): number {
+    // TODO: Calculate the final exam score needed to get the target score in class
+    let neededScore = (targetScore - currentAverage) / (finalExamWeight / 100);
+    return neededScore;
+}
+
+export {students, addStudent, getStudent, calculateFinalExamScore};
