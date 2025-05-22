@@ -17,7 +17,7 @@ function addStudent(newStudentData: NewStudentRequest): boolean {
     const {name, weights} = newStudentData;
 
     if(Object.hasOwn(students, name)) {
-        return false; // student already exists
+        return false; 
     }
 
     const currentAverage: number = calculateAverage(weights);
@@ -32,9 +32,45 @@ function getStudent(studentName: string): Student | undefined {
 }
 
 function calculateFinalExamScore(currentAverage: number, finalExamWeight: number, targetScore: number): number {
-    // TODO: Calculate the final exam score needed to get the target score in class
     let neededScore = (targetScore - currentAverage) / (finalExamWeight / 100);
     return neededScore;
 }
 
-export {students, addStudent, getStudent, calculateFinalExamScore};
+function getLetterGrade(score: number): string {
+    let letter: string;
+
+    if (score < 60){
+        letter = "F";
+    } else if (score < 70){
+        letter = "D";
+    } else if (score < 80){
+        letter = "C";
+    } else if (score < 90){
+        letter = "B"
+    } else {
+        letter = "A"
+    }
+
+    return letter;
+}
+
+function updateStudentGrade(studentName: string, assignmentName: string, newGrade: number): boolean {
+    const student = getStudent(studentName);
+
+    if (student === undefined){
+        return false;
+    }
+
+    const assignment = student.weights.assignmentWeights.find((item) => item.name === assignmentName); //.grade = newGrade;
+
+    if (assignment === undefined){
+        return false;
+    }
+
+    assignment.grade = newGrade;    
+    student.currentAverage = calculateAverage(student.weights);
+    
+    return true;
+}
+
+export {students, addStudent, getStudent, calculateFinalExamScore, getLetterGrade, updateStudentGrade};

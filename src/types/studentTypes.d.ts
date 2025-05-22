@@ -20,7 +20,7 @@ type NewStudentRequest = {
     weights: CourseGrades;
 };
 
-type AssignmentGrad = {
+type AssignmentGrade = {
     grade: number;
 };
 
@@ -40,4 +40,9 @@ type StudentManager = Record<string, Student>;
 
 type StudentNameParams = {
     studentName: string;
+}
+
+type GradeUpdateParams = {
+    studentName: string;
+    assignmentName: string;
 }
