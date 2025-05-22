@@ -79,7 +79,7 @@ function updateGrade(req: Request, res: Response){
         return
     }
 
-    res.json(students[studentName])
+    // res.json(students[studentName])
 
     res.sendStatus(200);
 }
